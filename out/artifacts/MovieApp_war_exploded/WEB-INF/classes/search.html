@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>🎬 Film Arama</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        #results {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .movie-card {
+            width: 200px;
+            background-color: #1e1e1e;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .movie-card img {
+            width: 100%;
+            border-radius: 6px;
+        }
+
+        .movie-card h3 {
+            font-size: 16px;
+            margin: 10px 0 5px;
+        }
+
+        .movie-card p {
+            margin: 4px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<h1>🎥 MovieApp Film Arama</h1>
+<input type="text" id="searchInput" placeholder="Film ismi girin...">
+<div id="results"></div>
+
+<script>
+    const apiKey = "dace9b311c97455c8cd70a83f413dd46";
+    const input = document.getElementById("searchInput");
+    const resultsContainer = document.getElementById("results");
+
+    input.addEventListener("input", function () {
+        const query = input.value.trim();
+        if (query.length < 2) {
+            resultsContainer.innerHTML = "";
+            return;
+        }
+
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                resultsContainer.innerHTML = "";
+
+                if (!data.results || data.results.length === 0) {
+                    resultsContainer.innerHTML = "<p>🎬 Film bulunamadı.</p>";
+                    return;
+                }
+
+                data.results.forEach(movie => {
+                    const poster = movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
+                        : "https://via.placeholder.com/200x300?text=No+Image";
+
+                    const movieCard = document.createElement("div");
+                    movieCard.className = "movie-card";
+                    movieCard.innerHTML = `
+                            <img src="${poster}" alt="${movie.title}">
+                            <h3>${movie.title}</h3>
+                            <p>⭐ ${movie.vote_average}</p>
+                            <p>📅 ${movie.release_date}</p>
+                        `;
+                    resultsContainer.appendChild(movieCard);
+                });
+            })
+            .catch(error => {
+                resultsContainer.innerHTML = "<p>⚠️ Hata oluştu.</p>";
+                console.error("Hata:", error);
+            });
+    });
+</script>
+</body>
+</html>
