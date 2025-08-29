@@ -2,7 +2,7 @@
 
 A simple Java servlet-based web application for browsing movies, powered by The Movie Database (TMDb) API and a MySQL backend for user data (auth + lists).
 
-> **Note:** This README was generated on 2025-08-29. Update it as your project evolves.
+
 
 ## ✨ Features
 
