@@ -201,6 +201,11 @@ The servlets expose routes (exact names depend on annotations and mapping):
 
 Add a license (e.g., MIT) or state “All rights reserved” if you prefer.
 
+![Uygulama Ekran Görüntüsü](images/app1.png)
+![Uygulama Ekran Görüntüsü](images/app2.png)
+![Uygulama Ekran Görüntüsü](images/app3.png)
+
+
 ---
 
 ### Developer Notes
